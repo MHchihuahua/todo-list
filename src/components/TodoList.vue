@@ -42,7 +42,7 @@ onMounted(() => {
                 <li v-for="(todo, index) in todos" :key="todo.id"
                     :class="['todo-item', { 'todo-item--active': todo.id === activeTodoId }]"
                     @click="setActiveTodoId(todo.id)">
-                    {{index + 1}}. {{todo.title}}
+                    {{ index + 1 }}. {{ todo.title }}
                 </li>
             </ol>
             <button class="add-btn" @click="addTodo" :disabled="disabledAddButton">Add Item</button>

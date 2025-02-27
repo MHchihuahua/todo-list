@@ -13,13 +13,14 @@ const triggerFileInput = () => {
 
 const uploadImage = (event) => {
     const file = event.target.files[0];
-    console.log(file);
+    const reader = new FileReader();
+
     if (!file) return;
 
-    const reader = new FileReader();
     reader.onload = () => {
         activeTodo.value.imageUpload = reader.result;
     };
+
     reader.readAsDataURL(file);
 };
 
@@ -35,6 +36,9 @@ const adjustDate = (date, offset) => {
 
     return newDate.toISOString().split('T')[0];
 };
+
+const getMinDate = () => activeTodo.value.startDate ? adjustDate(activeTodo.value.startDate, 1) : null;
+const getMaxDate = () => activeTodo.value.endDate ? adjustDate(activeTodo.value.endDate, -1) : null;
 
 const MAX_CONTENT_LENGTH = 200;
 const charCount = computed(() => `${activeTodo.value.content.length}/${MAX_CONTENT_LENGTH}`);

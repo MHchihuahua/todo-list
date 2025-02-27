@@ -51,9 +51,11 @@ const handleResize = () => {
 onMounted(() => {
   window.addEventListener('resize', handleResize);
 });
+
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
 });
+
 provide('isMobile', isMobile);
 provide('todos', todos);
 provide('activeTodoId', activeTodoId);
@@ -68,18 +70,16 @@ provide('deleteTodo', deleteTodo);
     <button v-if="isMobile && !showMenu" class="menu-button" @click="showMenu = true">
       <i class="fa-solid fa-bars"></i>
     </button>
-    
-    <TodoList v-if="!isMobile || showMenu"  @close="showMenu = false" />
-
-    <TodoForm  />
+    <TodoList v-if="!isMobile || showMenu" @close="showMenu = false" />
+    <TodoForm />
   </div>
 </template>
 
 <style scoped>
 .container {
   width: 100%;
-  display: flex;
   height: 100vh;
+  display: flex;
 }
 
 .menu-button {
@@ -91,5 +91,4 @@ provide('deleteTodo', deleteTodo);
   cursor: pointer;
   z-index: 10;
 }
-
 </style>
