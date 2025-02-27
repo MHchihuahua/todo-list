@@ -43,6 +43,8 @@ const getMinDate = () => {
 const getMaxDate = () => {
     return activeTodo.value.endDate ? adjustDate(activeTodo.value.endDate, -1) : null;
 };
+
+const charCount = computed(() => `${activeTodo.value.content.length}/200`);
 </script>
 
 <template>
@@ -89,6 +91,7 @@ const getMaxDate = () => {
             <div class="content-container">
                 <textarea id="content" class="content-area" placeholder="content..." v-model="activeTodo.content"
                     maxlength="200"></textarea>
+                <div class="char-count">{{ charCount }}</div>
             </div>
         </div>
     </form>
