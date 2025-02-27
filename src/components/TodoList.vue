@@ -7,6 +7,7 @@ const isMobile = inject('isMobile');
 const todos = inject('todos');
 const activeTodoId = inject('activeTodoId');
 const setActiveTodoId = inject('setActiveTodoId');
+const addTodo = inject('addTodo');
 </script>
 
 <template>
@@ -24,6 +25,7 @@ const setActiveTodoId = inject('setActiveTodoId');
                     {{index + 1}}. {{todo.title}}
                 </li>
             </ol>
+            <button class="add-btn" @click="addTodo" :disabled="disabledAddButton">Add Item</button>
         </div>
         <div class="image-container">
             <div class="image"></div>

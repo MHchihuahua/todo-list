@@ -3,12 +3,13 @@ import { ref, inject, watch, computed } from 'vue';
 
 const todos = inject('todos');
 const activeTodo = inject('activeTodo');
+const deleteTodo = inject('deleteTodo');
 </script>
 
 <template>
     <form class="todo-form">
         <div class="delete-group">
-            <button>
+            <button type="button" @click="deleteTodo">
                 <i class="fa-solid fa-trash"></i>
             </button>
         </div>

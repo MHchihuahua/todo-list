@@ -14,6 +14,31 @@ let currentId = 2;
 
 const activeTodo = computed(() => todos.value.find(todo => todo.id === activeTodoId.value) || null);
 
+const addTodo = () => {
+  const newTodo = {
+    id: currentId++,
+    title: `Item ${currentId}`,
+    startDate: '',
+    endDate: '',
+    imageUpload: '',
+    imageUrl: '',
+    content: ''
+  };
+
+  todos.value.push(newTodo);
+  activeTodoId.value = newTodo.id;
+};
+
+const deleteTodo = () => {
+  const index = todos.value.findIndex(todo => todo.id === activeTodoId.value);
+
+  if (index !== -1) {
+    todos.value.splice(index, 1);
+  }
+
+  activeTodoId.value = todos.value.length > 0 ? todos.value[0].id : null;
+};
+
 const handleResize = () => {
   isMobile.value = window.innerWidth < 768;
   if (!isMobile.value) {
@@ -32,6 +57,8 @@ provide('todos', todos);
 provide('activeTodoId', activeTodoId);
 provide('activeTodo', activeTodo);
 provide('setActiveTodoId', (id) => activeTodoId.value = id);
+provide('addTodo', addTodo);
+provide('deleteTodo', deleteTodo);
 </script>
 
 <template>
