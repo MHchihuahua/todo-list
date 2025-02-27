@@ -3,7 +3,8 @@ import { ref, computed, provide, onMounted, onUnmounted } from 'vue';
 import TodoList from './components/TodoList.vue';
 import TodoForm from './components/TodoForm.vue';
 
-const isMobile = ref(window.innerWidth < 768);
+const MOBILE_WIDTH = 768;
+const isMobile = ref(window.innerWidth < MOBILE_WIDTH);
 const showMenu = ref(false);
 const todos = ref([
   { id: 0, title: 'Item 1', startDate: '', endDate: '', imageUpload: '', imageUrl: '', content: '' },
@@ -40,7 +41,8 @@ const deleteTodo = () => {
 };
 
 const handleResize = () => {
-  isMobile.value = window.innerWidth < 768;
+  isMobile.value = window.innerWidth < MOBILE_WIDTH;
+
   if (!isMobile.value) {
     showMenu.value = false;
   }
