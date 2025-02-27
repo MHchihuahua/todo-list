@@ -1,10 +1,18 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, provide, onMounted, onUnmounted } from 'vue';
 import TodoList from './components/TodoList.vue';
 import TodoForm from './components/TodoForm.vue';
 
 const isMobile = ref(window.innerWidth < 768);
 const showMenu = ref(false);
+const todos = ref([
+  { id: 0, title: 'Item 1', startDate: '', endDate: '', imageUpload: '', imageUrl: '', content: '' },
+  { id: 1, title: 'Item 2', startDate: '', endDate: '', imageUpload: '', imageUrl: '', content: '' }
+]);
+const activeTodoId = ref(0);
+let currentId = 2;
+
+const activeTodo = computed(() => todos.value.find(todo => todo.id === activeTodoId.value) || null);
 
 const handleResize = () => {
   isMobile.value = window.innerWidth < 768;
@@ -20,6 +28,10 @@ onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
 });
 provide('isMobile', isMobile);
+provide('todos', todos);
+provide('activeTodoId', activeTodoId);
+provide('activeTodo', activeTodo);
+provide('setActiveTodoId', (id) => activeTodoId.value = id);
 </script>
 
 <template>

@@ -4,6 +4,9 @@ import { ref, defineEmits, inject, computed, onMounted } from 'vue';
 const emit = defineEmits(['close']);
 
 const isMobile = inject('isMobile');
+const todos = inject('todos');
+const activeTodoId = inject('activeTodoId');
+const setActiveTodoId = inject('setActiveTodoId');
 </script>
 
 <template>
@@ -14,11 +17,13 @@ const isMobile = inject('isMobile');
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <p class="todo-list-title">Demo Todo List</p>
-            <ul class="todo-list-items">
-                <li class="todo-item">1. Item title</li>
-                <li class="todo-item todo-item--active">2. new item title</li>
-            </ul>
-            <button class="add-btn">Add Item</button>
+            <ol class="todo-list-items">
+                <li v-for="(todo, index) in todos" :key="todo.id"
+                    :class="['todo-item', { 'todo-item--active': todo.id === activeTodoId }]"
+                    @click="setActiveTodoId(todo.id)">
+                    {{index + 1}}. {{todo.title}}
+                </li>
+            </ol>
         </div>
         <div class="image-container">
             <div class="image"></div>
@@ -59,7 +64,7 @@ const isMobile = inject('isMobile');
 }
 
 .todo-list-items {
-    list-style: none;
+    cursor: pointer;
     padding: 0;
 }
 

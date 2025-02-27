@@ -1,5 +1,8 @@
 <script setup>
+import { ref, inject, watch, computed } from 'vue';
 
+const todos = inject('todos');
+const activeTodo = inject('activeTodo');
 </script>
 
 <template>
@@ -12,15 +15,15 @@
 
         <div class="form-group title-group">
             <label for="title">Title</label>
-            <input type="text" id="title" placeholder="new item title">
+            <input type="text" id="title" v-model="activeTodo.title">
         </div>
 
         <div class="form-group date-group">
             <label for="date">Date</label>
             <div class="date-container">
-                <input type="date" id="date" placeholder="2022/05/17">
+                <input type="date" id="date" v-model="activeTodo.startDate" :max="getMaxDate()">
                 <span>~</span>
-                <input type="date" placeholder="2022/05/18">
+                <input type="date" v-model="activeTodo.endDate" :min="getMinDate()">
             </div>
         </div>
 
@@ -29,21 +32,22 @@
             <div class="image-container">
                 <button class="upload-button">Upload Image</button>
                 <p class="divider">or</p>
-                <input type="text" placeholder="請輸入圖片網址">
+                <input type="text" placeholder="請輸入圖片網址" v-model="activeTodo.imageUrl">
             </div>
         </div>
 
         <div class="form-group image-preview-group">
             <div class="image-preview">
-                <img src="" alt="Preview">
+                <img v-if="activeTodo.imageUpload || activeTodo.imageUrl"
+                    :src="activeTodo.imageUpload || activeTodo.imageUrl" alt="image preview">
             </div>
         </div>
 
         <div class="form-group content-group">
             <label for="content">Content</label>
             <div class="content-container">
-                <textarea id="content" class="content-area" placeholder="content..."></textarea>
-                <div class="char-count">0/200</div>
+                <textarea id="content" class="content-area" placeholder="content..." v-model="activeTodo.content"
+                    maxlength="200"></textarea>
             </div>
         </div>
     </form>
