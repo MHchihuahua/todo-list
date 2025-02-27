@@ -7,7 +7,7 @@ const deleteTodo = inject('deleteTodo');
 </script>
 
 <template>
-    <form class="todo-form">
+    <form class="todo-form" v-if="todos.length > 0">
         <div class="delete-group">
             <button type="button" @click="deleteTodo">
                 <i class="fa-solid fa-trash"></i>
@@ -52,6 +52,10 @@ const deleteTodo = inject('deleteTodo');
             </div>
         </div>
     </form>
+    <div class="no-item" v-else>
+        <i class="fa-solid fa-box-open"></i>
+        <p>The List is Empty.</p>
+    </div>
 </template>
 
 <style scoped>
@@ -67,6 +71,25 @@ const deleteTodo = inject('deleteTodo');
         "title date"
         "image image-preview"
         "content content";
+}
+
+.no-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    color: #ccc;
+}
+
+.no-item i {
+    font-size: 48px;
+}
+
+.no-item p {
+    font-size: 24px;
+    font-weight: 600;
 }
 
 .delete-group {
