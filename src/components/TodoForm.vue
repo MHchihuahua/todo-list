@@ -4,6 +4,31 @@ import { ref, inject, watch, computed } from 'vue';
 const todos = inject('todos');
 const activeTodo = inject('activeTodo');
 const deleteTodo = inject('deleteTodo');
+
+const fileInput = ref(null);
+
+const triggerFileInput = () => {
+    fileInput.value.click();
+};
+
+const uploadImage = (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+        activeTodo.value.imageUpload = reader.result;
+    };
+    reader.readAsDataURL(file);
+};
+
+watch(() => activeTodo.value?.imageUrl, (newUrl) => {
+    if (newUrl && activeTodo.value) {
+        activeTodo.value.imageUpload = '';
+    }
+});
+
 const adjustDate = (date, offset) => {
     const newDate = new Date(date);
     newDate.setDate(newDate.getDate() + offset);
@@ -45,7 +70,8 @@ const getMaxDate = () => {
         <div class="form-group image-group">
             <label for="image">Image</label>
             <div class="image-container">
-                <button class="upload-button">Upload Image</button>
+                <input type="file" ref="fileInput" @change="uploadImage" accept="image/*" hidden>
+                <button type="button" class="upload-button" @click="triggerFileInput">Upload Image</button>
                 <p class="divider">or</p>
                 <input type="text" placeholder="請輸入圖片網址" v-model="activeTodo.imageUrl">
             </div>
