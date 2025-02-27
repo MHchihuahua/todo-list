@@ -4,6 +4,20 @@ import { ref, inject, watch, computed } from 'vue';
 const todos = inject('todos');
 const activeTodo = inject('activeTodo');
 const deleteTodo = inject('deleteTodo');
+const adjustDate = (date, offset) => {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + offset);
+
+    return newDate.toISOString().split('T')[0];
+};
+
+const getMinDate = () => {
+    return activeTodo.value.startDate ? adjustDate(activeTodo.value.startDate, 1) : null;
+};
+
+const getMaxDate = () => {
+    return activeTodo.value.endDate ? adjustDate(activeTodo.value.endDate, -1) : null;
+};
 </script>
 
 <template>
