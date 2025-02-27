@@ -21,6 +21,7 @@ button:hover {
 button:disabled {
   background: #e7ffe9;
   color: #ebebeb;
+  cursor: not-allowed;
 }
 
 input, textarea {
