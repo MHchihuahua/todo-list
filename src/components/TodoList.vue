@@ -8,6 +8,26 @@ const todos = inject('todos');
 const activeTodoId = inject('activeTodoId');
 const setActiveTodoId = inject('setActiveTodoId');
 const addTodo = inject('addTodo');
+
+const randomImageUrl = ref('');
+const disabledAddButton = computed(() => todos.value.length >= 10);
+
+const fetchImage = async () => {
+    const apiUrl = 'https://dog.ceo/api/breeds/image/random';
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        randomImageUrl.value = data.message;
+    } catch (error) {
+        console.error('Error fetching image:', error);
+    }
+};
+
+onMounted(() => {
+    fetchImage();
+});
 </script>
 
 <template>
@@ -28,7 +48,9 @@ const addTodo = inject('addTodo');
             <button class="add-btn" @click="addTodo" :disabled="disabledAddButton">Add Item</button>
         </div>
         <div class="image-container">
-            <div class="image"></div>
+            <div class="image">
+                <img v-if="randomImageUrl" :src="randomImageUrl" alt="Random Dog" @click="fetchImage" />
+            </div>
         </div>
     </div>
 </template>
@@ -99,17 +121,23 @@ const addTodo = inject('addTodo');
 .image-container {
     display: flex;
     justify-content: center;
+    cursor: pointer;
     padding: 20px;
 }
 
 .image {
     width: 210px;
-    height: 60px;
-    background-color: #ebebeb;
+    height: 80px;
+    overflow: hidden;
     border-radius: 10px;
+    background-color: #ebebeb;
 }
 
-
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 @media (max-width: 768px) {
     .todo-list-wrapper {
