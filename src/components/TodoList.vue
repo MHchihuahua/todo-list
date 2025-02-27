@@ -1,10 +1,9 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { ref, defineEmits, inject, computed, onMounted } from 'vue';
 
-const props = defineProps({
-    isMobile: Boolean,
-});
 const emit = defineEmits(['close']);
+
+const isMobile = inject('isMobile');
 </script>
 
 <template>

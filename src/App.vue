@@ -19,6 +19,7 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
 });
+provide('isMobile', isMobile);
 </script>
 
 <template>
@@ -27,7 +28,7 @@ onUnmounted(() => {
       <i class="fa-solid fa-bars"></i>
     </button>
     
-    <TodoList v-if="!isMobile || showMenu" :isMobile="isMobile" @close="showMenu = false" />
+    <TodoList v-if="!isMobile || showMenu"  @close="showMenu = false" />
 
     <TodoForm  />
   </div>
